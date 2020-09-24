@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Resource Monitor</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<style>
+    .container {
+        width: 33%;
+        height: 50%;
+    }
+    .aParent div {
+    float: left;
+    clear: none; 
+    padding-top: 2%;
+}
+.aChild div {
+    float: left;
+    clear: none; 
+    padding:50%;
+    
+}
+.center {
+  margin: auto;
+  width: 7%;
+  margin-left: 13%;
+  margin-right: 13%;
+}
+
+.header{
+    overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 10px 10px;
+
+}
+</style>
+<body>
+
+    <div class="header">
+        <div class="aChild">
+            <button id="cpuBtn" class="center">
+                CPU
+            </button>
+            <button id="memBtn" class="center">
+                Memory
+            </button>
+            <button id="dbBtn" class="center">
+                DB Trend
+            </button>
+        </div>
+    </div>
+    <div class="aParent">
+        <div class="container">
+            <canvas id="cpu"></canvas>
+        </div>
+        <div class="container">
+            <canvas id="mem"></canvas>
+        </div>
+        <div class="container">
+            <canvas id="dbtrend"></canvas>
+        </div>
+    </div>
+
+    <div>
+        <p id = "topcpu">
+            topcpu 
+        </p>
+        <p id = "topmem">
+            topmem 
+        </p>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="{% static 'js/myChart.js' %}" type="text/javascript"></script>
+<!--<script src="{% static 'myChart.js' %}"></script> -->
+</html>
