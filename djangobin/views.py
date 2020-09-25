@@ -56,19 +56,42 @@ def db(request):
 def maxcpu(request):
     #TO DO: Return the json object in response
     #filter the command to get the required things
-    process = subprocess.Popen('ps -eo pid,ppid,cmd,%cpu --sort=-%cpu | head', 
+    process = subprocess.Popen('ps -eo pid,ppid,cmd,%cpu --sort=-%cpu | head -n 6', 
     shell=True, 
     stdout=subprocess.PIPE, 
     stderr=subprocess.PIPE )
-    return HttpResponse(process.stdout)
+    arr_cpu =[]
+    for a in process.stdout:
+        json_str = {'pid' :'', 'ppid': ''}
+        str = a.split();
+        # print str
+        json_str['pid'] = str[0]
+        json_str['ppid'] = str[1]
+        json_str['name'] = str[2]
+        json_str['percent_util'] = str[3]
+        print json_str
+        arr_cpu.append(json_str)
+
+    return HttpResponse(arr_cpu)
 
 def maxmem(request):
     #TO DO: Return the json object in response
     #filter the command to get the required things
-    process = subprocess.Popen('ps -eo pid,ppid,cmd,%mem --sort=-%mem | head', 
+    process = subprocess.Popen('ps -eo pid,ppid,cmd,%mem --sort=-%mem | head -n 6', 
     shell=True, 
     stdout=subprocess.PIPE, 
     stderr=subprocess.PIPE )
-    return HttpResponse(process.stdout)
+    arr_mem =[]
+    for a in process.stdout:
+        json_str = {'pid': '', 'ppid': ''}
+        str = a.split();
+        # print str
+        json_str['pid'] = str[0]
+        json_str['ppid'] = str[1]
+        json_str['name'] = str[2]
+        json_str['percent_util'] = str[3]
+        print json_str
+        arr_mem.append(json_str)
+    return HttpResponse(arr_mem)
 
 
