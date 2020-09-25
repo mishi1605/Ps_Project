@@ -30,13 +30,11 @@ Install [CORS Unblock](https://chrome.google.com/webstore/detail/cors-unblock/lf
 
 ## For Firefox Users - 
 
-Open settings.py file and add the followling line at the bottom of the file and save:
-
-CORS_ORIGIN_ALLOW_ALL = True
-
 Then enter into the project directory from terminal and run:
 
 yum install python-pip
+
+pip install --upgrade pip
 
 pip install django-cors-headers
 

@@ -44,14 +44,14 @@
 
     <div class="header">
         <div class="aChild">
-            <button id="cpuBtn" class="center">
+            <button id="cpuBtn" class="center" onclick="updateCpu()">
                 CPU
             </button>
-            <button id="memBtn" class="center">
+            <button id="memBtn" class="center" onclick="updateMem()">
                 Memory
             </button>
-            <button id="dbBtn" class="center">
-                DB Trend
+            <button id="dbBtn" class="center" onclick="updateDB()">
+                DB
             </button>
         </div>
     </div>
@@ -82,3 +82,5 @@
 <script src="{% static 'js/myChart.js' %}" type="text/javascript"></script>
 <!--<script src="{% static 'myChart.js' %}"></script> -->
 </html>
+
+
