@@ -11,6 +11,19 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <style>
+    th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        } 
     .container {
         width: 33%;
         height: 50%;
@@ -68,10 +81,15 @@
     </div>
 
     <div>
-        <p id = "topcpu">
+        
+        <p id="topcpu">
             topcpu 
         </p>
-        <p id = "topmem">
+        
+    </div>
+    
+    <div>
+        <p id="topmem">
             topmem 
         </p>
     </div>
