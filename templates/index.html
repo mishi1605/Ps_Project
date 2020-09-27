@@ -11,19 +11,35 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <style>
-    th, td, p, input {
-            font:14px Verdana;
-        }
-        table, th, td 
-        {
-            border: solid 1px #DDD;
-            border-collapse: collapse;
-            padding: 2px 3px;
-            text-align: center;
-        }
-        th {
-            font-weight:bold;
-        } 
+    .content{
+    border-collapse:collapse;
+    margin: 25px 0;
+    font-size: 1em;
+    border-radius: 5px 5px 0 0;
+    overflow:hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+   }
+  .content thead tr{
+    background-color: #009879;
+    color:#ffffff;
+    text-align:left;
+    font-weight: bold;
+  }
+  .content th,
+  .content td{
+    padding 12px 15px ;
+  }
+  .content tbody tr{
+    border-bottom:1px solid #dddddd;
+  }
+  .content tbody tr:nth-of-type(even){
+    background-color:#f3f3f3;
+    
+  }
+  .content tbody tr:last-of-type{
+    border-bottom:2px solid #009879;
+  }
+
     .container {
         width: 33%;
         height: 50%;
@@ -36,7 +52,6 @@
 
     .aParent div {
     float: left;
-    clear: none; 
     padding-top: 2%;
 }
 .aChild div {
@@ -85,21 +100,15 @@
             <canvas id="dbtrend"></canvas>
         </div>
     </div>
-
-    <div class="aParent">
-        <div class = "containertable">
-        <p id="topcpu">
-                topcpu 
-            </p>
-            
-        </div>
-        
-        <div class="containertable">
-            <p id="topmem">
+    <table align="center"><tr><td>
+        <p id="topcpu" class="content">
+            topcpu 
+        </p>
+        </td><td>
+            <p id="topmem" class="content">
                 topmem 
             </p>
-        </div>
-    </div>
+        </td></tr></table>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
