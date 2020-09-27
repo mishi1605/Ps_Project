@@ -221,7 +221,7 @@ function doRunmaxcpu() {
         // console.log(typeof respone.data);
         var str_a = response.data
 
-        var arr = str_a.split("#")
+        var arr = str_a.split("?")
         var arr_fin = []
         
         for(var i = 1; i < arr.length; i++){
@@ -249,7 +249,7 @@ function doRunmaxmem() {
     axios({
     method: 'get',
     // baseURL: window.location.origin,
-    url: 'http://127.0.0.1:8000/maxmem',
+    url: 'http://127.0.0.1:8000/maxmem/',
 
     // responseType: 'json',
 })
