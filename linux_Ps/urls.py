@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^db/', views.db),
     url(r'^maxcpu/', views.maxcpu),
     url(r'^maxmem/', views.maxmem),
+    url(r'^cpuview/', views.GetCpuView),
 
 ]

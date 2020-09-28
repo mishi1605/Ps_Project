@@ -8,8 +8,8 @@ var clabel_cpu = ["12:00", "12:01", "12:02", "12:03"];
 var cdata_mem = [10,15,12,1];
 var clabel_mem = ["12:00", "12:01", "12:02", "12:03"];
 
-var cdata_db = [10,15,12,1];
-var clabel_db = ["12:00", "12:01", "12:02", "12:03"];
+var cdata_db = [10,15,12,1];                              
+var clabel_db = ["12:00", "12:01", "12:02", "12:03"];    
 
 var ctx = document.getElementById("cpu").getContext('2d');
     var myChart1 = new Chart(ctx, {
@@ -219,7 +219,7 @@ function doRunmaxcpu() {
        // console.log("in javascript code")
         console.log(response.data)
         // console.log(typeof respone.data);
-        var str_a = response.data
+        var str_a = response.data  
 
         var arr = str_a.split("?")
         var arr_fin = []
@@ -229,11 +229,12 @@ function doRunmaxcpu() {
            // console.log(arr[i]);
            // console.log(arr[i+1]);
            // console.log(typeof arr[i])
-            arr_fin.push(JSON.parse(arr[i]));
+           console.log(JSON.parse(arr[i]))
+            arr_fin.push(JSON.parse(arr[i]));    
 
         }
-        // console.log("printing arr fin")
-        // console.log(arr_fin)
+        console.log("printing arr fin")
+        console.log(arr_fin)
         // array of json objects
         CreateTableFromJSON(arr_fin)
         console.log(response);
@@ -333,21 +334,53 @@ function CreateTableFromJSON(myBooks) {
 
         var tr = header.insertRow(-1);                   // TABLE ROW.
 
-        for (var i = 0; i < col.length; i++) {
-            var th = document.createElement("th");      // TABLE HEADER.
-            th.innerHTML = col[i];
-            tr.appendChild(th);
-        }
+
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = "PID";
+        tr.appendChild(th);
+
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = "PPID";
+        tr.appendChild(th);
+
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = "CPU UTILIZATION";
+        tr.appendChild(th);
+
+
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = "NAME" ;
+        tr.appendChild(th);
+
+
+        // for (var i = 0; i < col.length; i++) {
+        //     var th = document.createElement("th");      // TABLE HEADER.
+        //     th.innerHTML = ;
+        //     tr.appendChild(th);
+        // }
 
         // ADD JSON DATA TO THE TABLE AS ROWS.
         for (var i = 0; i < myBooks.length; i++) {
 
             tr = tblBody.insertRow(-1);
 
-            for (var j = 0; j < col.length; j++) {
-                var tabCell = tr.insertCell(-1);
-                tabCell.innerHTML = myBooks[i][col[j]];
-            }
+              var tabCell = tr.insertCell(-1);
+              tabCell.innerHTML = myBooks[i].pid;
+
+              var tabCell = tr.insertCell(-1);
+              tabCell.innerHTML = myBooks[i].ppid;
+
+              var tabCell = tr.insertCell(-1);
+              tabCell.innerHTML = myBooks[i].cpuUtilization;
+
+              var tabCell = tr.insertCell(-1);
+              tabCell.innerHTML = myBooks[i].name;
+
+
+            // for (var j = 0; j < col.length; j++) {
+            //     var tabCell = tr.insertCell(-1);
+            //     tabCell.innerHTML = myBooks[i][col[j]];
+            // }
         }
         table.appendChild(tblBody);
 
@@ -406,21 +439,53 @@ function CreateTableFromJSON1(myBooks) {
 
         var tr = header.insertRow(-1);                   // TABLE ROW.
 
-        for (var i = 0; i < col.length; i++) {
-            var th = document.createElement("th");      // TABLE HEADER.
-            th.innerHTML = col[i];
-            tr.appendChild(th);
-        }
+
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = "PID";
+        tr.appendChild(th);
+
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = "PPID";
+        tr.appendChild(th);
+
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = "MEMORY UTILIZATION";
+        tr.appendChild(th);
+
+        var th = document.createElement("th");      // TABLE HEADER.
+        th.innerHTML = "NAME";
+        tr.appendChild(th);
+
+        // for (var i = 0; i < col.length; i++) {
+        //     var th = document.createElement("th");      // TABLE HEADER.
+        //     th.innerHTML = col[i];
+        //     tr.appendChild(th);
+        // }
 
         // ADD JSON DATA TO THE TABLE AS ROWS.
         for (var i = 0; i < myBooks.length; i++) {
 
             tr = tblBody.insertRow(-1);
+            console.log("printing myBooks[i]")
+            console.log(myBooks[i])
 
-            for (var j = 0; j < col.length; j++) {
-                var tabCell = tr.insertCell(-1);
-                tabCell.innerHTML = myBooks[i][col[j]];
-            }
+            
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = myBooks[i].pid;
+
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = myBooks[i].ppid;
+
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = myBooks[i].memory_utilization;
+
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = myBooks[i].name;
+
+            // for (var j = 0; j < col.length; j++) {
+            //     var tabCell = tr.insertCell(-1);
+            //     tabCell.innerHTML = myBooks[i][col[j]];
+            // }
         }
         table.appendChild(tblBody);
 

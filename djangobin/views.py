@@ -3,9 +3,10 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-
-
-
+from .serializers import *
+from djangobin.models import *
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
 import subprocess
 # from django.http import JsonResponse
 
@@ -35,7 +36,15 @@ def cpu(request):
     shell=True, 
     stdout=subprocess.PIPE, 
     stderr=subprocess.PIPE )
-    return HttpResponse(process.stdout)
+  
+    print type(process.stdout)
+    print "\n"
+    cpu_util = process.stdout.read()
+    cpu_obj = Cpu.objects.create(percent_util_cpu = float(cpu_util))
+    # print type(process.stdout.read())
+    cpu_obj.save();
+    # cpu_obj1 = Cpu.objects.get()
+    return HttpResponse(cpu_util)
 
     # import psutil
     # return HttpResponse(psutil.cpu_percent());
@@ -46,7 +55,10 @@ def mem(request):
     shell=True, 
     stdout=subprocess.PIPE, 
     stderr=subprocess.PIPE )
-    return HttpResponse(process.stdout)
+    mem_util = process.stdout.read()
+    mem_obj = Mem.objects.create(percent_util_mem = float(mem_util))
+    mem_obj.save();
+    return HttpResponse(mem_util)
 
     # import psutil
     #import random
@@ -56,25 +68,28 @@ def db(request):
     #TO DO: Returns a random number that may or may not be db trend :)
     #we have to find command for this
     import random
-    return HttpResponse(random.randint(0,100));
+    return HttpResponse(random.randint(20,60));
 
 def maxcpu(request):
-    process = subprocess.Popen('ps -eo pid,ppid,cmd,%cpu --sort=-%cpu | head -n 6 | tail -n 5', 
+    process = subprocess.Popen('ps -eo pid,ppid,%cpu,cmd --sort=-%cpu | head -n 6 | tail -n 5', 
     shell=True, 
     stdout=subprocess.PIPE, 
     stderr=subprocess.PIPE )
     arr_cpu = " "
     for a in process.stdout:
-        json_str = {'pid' :'', 'ppid': ''}
+        json_str = {'pid' :'', 'ppid': '','cpuUtilization': '', 'name':''}         
+        print "intial json_str"
+        print json_str
         print type(json_str)
         stri = a.split();
         print stri
         json_str['pid'] = stri[0]
         json_str['ppid'] = stri[1]
-        json_str['name'] = stri[2]
-        json_str['cpu_utilization'] = stri[3]
-        # print json_str
-        # print "\n"
+        json_str['cpuUtilization'] = stri[2]
+        json_str['name'] = stri[3]
+        print "checking json_str"
+        print json_str
+        print "\n"
         # print type(json_str)
         json_str = json.dumps(json_str)
         # print "print json dumps type"
@@ -108,7 +123,7 @@ def maxcpu(request):
 def maxmem(request):
     #TO DO: Return the json object in response
     #filter the command to get the required things
-    process = subprocess.Popen('ps -eo pid,ppid,cmd,%mem --sort=-%mem | head -n 6 | tail -n 5', 
+    process = subprocess.Popen('ps -eo pid,ppid,%mem,cmd --sort=-%mem | head -n 6 | tail -n 5', 
     shell=True, 
     stdout=subprocess.PIPE, 
     stderr=subprocess.PIPE )
@@ -116,14 +131,14 @@ def maxmem(request):
     arr_mem = " "
     
     for a in process.stdout:
-        json_str = {'pid' :'', 'ppid': ''}
+        json_str = {'pid' :'', 'ppid': '', 'memory_utilization': '', 'name':''}
         # print type(json_str)
         stri = a.split();
         # print str
         json_str['pid'] = stri[0]
         json_str['ppid'] = stri[1]
-        json_str['name'] = stri[2]
-        json_str['memory_utilization'] = stri[3]
+        json_str['name'] = stri[3]
+        json_str['memory_utilization'] = stri[2]
         # print json_str
         # print "\n"
         # print type(json_str)
@@ -141,3 +156,29 @@ def maxmem(request):
     return HttpResponse(str_new)
 
 
+   
+
+def GetCpuView(request):
+    lists = Cpu.objects.all()
+    # print lists
+
+    for a in lists:
+        print a.percent_util_cpu, a.time_cpu
+        print "\n"
+
+    print "\n"
+    # serializer = CpuSerializer(lists,many=True)
+    return HttpResponse("success")
+
+
+def GetMemView(request):
+    lists = Mem.objects.all()
+    # print lists
+
+    for a in lists:
+        print a.percent_util_mem, a.time_mem
+        print "\n"
+
+    print "\n"
+    # serializer = CpuSerializer(lists,many=True)
+    return HttpResponse("success")
