@@ -2,14 +2,14 @@ function cpuChart(data, labels, ele) {
     
 }
 
-var cdata_cpu = [10,15,12,1];
-var clabel_cpu = ["12:00", "12:01", "12:02", "12:03"];
+var cdata_cpu = [];
+var clabel_cpu = [];
 
-var cdata_mem = [10,15,12,1];
-var clabel_mem = ["12:00", "12:01", "12:02", "12:03"];
+var cdata_mem = [];
+var clabel_mem = [];
 
-var cdata_db = [10,15,12,1];                              
-var clabel_db = ["12:00", "12:01", "12:02", "12:03"];    
+var cdata_db = [];
+var clabel_db = [];
 
 var ctx = document.getElementById("cpu").getContext('2d');
     var myChart1 = new Chart(ctx, {
@@ -17,33 +17,56 @@ var ctx = document.getElementById("cpu").getContext('2d');
         data: {
             labels: clabel_cpu,
             datasets: [{
+                label: 'CPU Utilization',
                 data: cdata_cpu,
-                borderColor: 'rgba(93, 188, 210, 1)',
+                borderColor: 'rgba(93, 188, 210, 10)',
                 backgroundColor: 'rgba(93, 188, 210, 0.2)',
                 borderWidth:1,
                 pointRadius:0.5,
+                pointHitRadius: 20,
             }]
         },
-        options: {            
+        options: {          
             scales: {
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,  //{}
                         suggestedMax: 100,
-                    }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Percentage'
+                      }
                 }],
                 xAxes: [{
                     ticks: {
                         autoSkip: true,
                         maxTicksLimit: 5,
                         maxRotation: 0,
-                    }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                      }
                 }]               
             },
             legend:{
-                display: false
+                display: false,
+                backgroundColor:false,
+                labels:{
+                    boxWidth: 40
+                }
             },
-        },
+            title: {
+                display: true,
+                text: 'CPU Utilization',
+                position: 'top',
+                fontFamily: 'Open Sans',
+            },
+            maintainAspectRatio: false,
+            responsive:true,
+            
+        }
     });
     function updateCpu(){
     axios({
@@ -67,6 +90,11 @@ var ctx = document.getElementById("cpu").getContext('2d');
     });
 };
 
+setInterval(function(){
+    date = new Date();
+    nlabel = date.getHours()+':'+ (date.getMinutes()<10?'0':'')+date.getMinutes()+':'+(date.getSeconds()<10?'0':'')+date.getSeconds();
+    document.getElementById("sysclock").innerText= nlabel;
+}, 1000)
 
 var ctx = document.getElementById("mem").getContext('2d');
     var myChart2 = new Chart(ctx, {
@@ -74,11 +102,13 @@ var ctx = document.getElementById("mem").getContext('2d');
         data: {
             labels: clabel_mem,
             datasets: [{
+                label: 'Memory Consumption',
                 data: cdata_mem,
                 borderColor: 'rgba(205,157,218, 1)',
                 backgroundColor: 'rgba(205,157,218, 0.2)',
                 borderWidth:1,
                 pointRadius:0.5,
+                pointHitRadius: 20,
             }]
         },
         options: {            
@@ -87,19 +117,34 @@ var ctx = document.getElementById("mem").getContext('2d');
                     ticks: {
                         beginAtZero: true,  //{}
                         suggestedMax: 100,
-                    }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Percentage'
+                      }
                 }],
                 xAxes: [{
                     ticks: {
                         autoSkip: true,
                         maxTicksLimit: 5,
                         maxRotation: 0,
-                    }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                      }
                 }]                 
             },
             legend:{
                 display: false
             },
+            title: {
+                display: true,
+                text: 'Memory Consumption',
+                position: 'top'
+            },
+            maintainAspectRatio: false,
+            responsive:true,
         },
     });
     function updateMem(){
@@ -131,11 +176,13 @@ var ctx = document.getElementById("dbtrend").getContext('2d');
         data: {
             labels: clabel_db,
             datasets: [{
+                label: 'DB Trend',
                 data: cdata_db,
                 borderColor: 'rgba(175,215,145, 1)',
                 backgroundColor: 'rgba(175,215,145, 0.2)',
                 borderWidth:1,
                 pointRadius:0.5,
+                pointHitRadius: 20,
             }]
         },
         options: {            
@@ -144,19 +191,34 @@ var ctx = document.getElementById("dbtrend").getContext('2d');
                     ticks: {
                         beginAtZero: true,  //{}
                         suggestedMax: 100,
-                    }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Percentage'
+                      }
                 }],
                 xAxes: [{
                     ticks: {
                         autoSkip: true,
                         maxTicksLimit: 5,
                         maxRotation: 0,
-                    }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                      }
                 }]                 
             },
             legend:{
                 display: false
             },
+            title: {
+                display: true,
+                text: 'DB Trend',
+                position: 'top'
+            },
+            maintainAspectRatio: false,
+            responsive:true,
         },
     });
     function updateDB(){
@@ -219,7 +281,7 @@ function doRunmaxcpu() {
        // console.log("in javascript code")
         console.log(response.data)
         // console.log(typeof respone.data);
-        var str_a = response.data  
+        var str_a = response.data
 
         var arr = str_a.split("?")
         var arr_fin = []
@@ -229,12 +291,11 @@ function doRunmaxcpu() {
            // console.log(arr[i]);
            // console.log(arr[i+1]);
            // console.log(typeof arr[i])
-           console.log(JSON.parse(arr[i]))
-            arr_fin.push(JSON.parse(arr[i]));    
+            arr_fin.push(JSON.parse(arr[i]));
 
         }
-        console.log("printing arr fin")
-        console.log(arr_fin)
+        // console.log("printing arr fin")
+        // console.log(arr_fin)
         // array of json objects
         CreateTableFromJSON(arr_fin)
         console.log(response);
@@ -334,53 +395,21 @@ function CreateTableFromJSON(myBooks) {
 
         var tr = header.insertRow(-1);                   // TABLE ROW.
 
-
-        var th = document.createElement("th");      // TABLE HEADER.
-        th.innerHTML = "PID";
-        tr.appendChild(th);
-
-        var th = document.createElement("th");      // TABLE HEADER.
-        th.innerHTML = "PPID";
-        tr.appendChild(th);
-
-        var th = document.createElement("th");      // TABLE HEADER.
-        th.innerHTML = "CPU UTILIZATION";
-        tr.appendChild(th);
-
-
-        var th = document.createElement("th");      // TABLE HEADER.
-        th.innerHTML = "NAME" ;
-        tr.appendChild(th);
-
-
-        // for (var i = 0; i < col.length; i++) {
-        //     var th = document.createElement("th");      // TABLE HEADER.
-        //     th.innerHTML = ;
-        //     tr.appendChild(th);
-        // }
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
 
         // ADD JSON DATA TO THE TABLE AS ROWS.
         for (var i = 0; i < myBooks.length; i++) {
 
             tr = tblBody.insertRow(-1);
 
-              var tabCell = tr.insertCell(-1);
-              tabCell.innerHTML = myBooks[i].pid;
-
-              var tabCell = tr.insertCell(-1);
-              tabCell.innerHTML = myBooks[i].ppid;
-
-              var tabCell = tr.insertCell(-1);
-              tabCell.innerHTML = myBooks[i].cpuUtilization;
-
-              var tabCell = tr.insertCell(-1);
-              tabCell.innerHTML = myBooks[i].name;
-
-
-            // for (var j = 0; j < col.length; j++) {
-            //     var tabCell = tr.insertCell(-1);
-            //     tabCell.innerHTML = myBooks[i][col[j]];
-            // }
+            for (var j = 0; j < col.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = myBooks[i][col[j]];
+            }
         }
         table.appendChild(tblBody);
 
@@ -439,53 +468,21 @@ function CreateTableFromJSON1(myBooks) {
 
         var tr = header.insertRow(-1);                   // TABLE ROW.
 
-
-        var th = document.createElement("th");      // TABLE HEADER.
-        th.innerHTML = "PID";
-        tr.appendChild(th);
-
-        var th = document.createElement("th");      // TABLE HEADER.
-        th.innerHTML = "PPID";
-        tr.appendChild(th);
-
-        var th = document.createElement("th");      // TABLE HEADER.
-        th.innerHTML = "MEMORY UTILIZATION";
-        tr.appendChild(th);
-
-        var th = document.createElement("th");      // TABLE HEADER.
-        th.innerHTML = "NAME";
-        tr.appendChild(th);
-
-        // for (var i = 0; i < col.length; i++) {
-        //     var th = document.createElement("th");      // TABLE HEADER.
-        //     th.innerHTML = col[i];
-        //     tr.appendChild(th);
-        // }
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
 
         // ADD JSON DATA TO THE TABLE AS ROWS.
         for (var i = 0; i < myBooks.length; i++) {
 
             tr = tblBody.insertRow(-1);
-            console.log("printing myBooks[i]")
-            console.log(myBooks[i])
 
-            
-            var tabCell = tr.insertCell(-1);
-            tabCell.innerHTML = myBooks[i].pid;
-
-            var tabCell = tr.insertCell(-1);
-            tabCell.innerHTML = myBooks[i].ppid;
-
-            var tabCell = tr.insertCell(-1);
-            tabCell.innerHTML = myBooks[i].memory_utilization;
-
-            var tabCell = tr.insertCell(-1);
-            tabCell.innerHTML = myBooks[i].name;
-
-            // for (var j = 0; j < col.length; j++) {
-            //     var tabCell = tr.insertCell(-1);
-            //     tabCell.innerHTML = myBooks[i][col[j]];
-            // }
+            for (var j = 0; j < col.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = myBooks[i][col[j]];
+            }
         }
         table.appendChild(tblBody);
 

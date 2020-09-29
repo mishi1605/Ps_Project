@@ -9,6 +9,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Resource Monitor</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 </head>
 <style>
     .content{
@@ -42,7 +46,7 @@
 
     .container {
         width: 33%;
-        height: 50%;
+        height: 70%;
     }
 
     .containertable {
@@ -50,9 +54,12 @@
         height: 50%;
     }
 
-    .aParent div {
+    .aParent{
     float: left;
     padding-top: 2%;
+    height: 50%;
+
+    
 }
 .aChild div {
     float: left;
@@ -65,41 +72,107 @@
   width: 7%;
   margin-left: 13%;
   margin-right: 13%;
+  position:absolute;
+  top: 6px;
+  left: 0;
+}
+
+.chartContainer{
+    width:33%;
+    display: inline-block;
+}
+
+.labelContainer{
+    width:6%;
+    margin:13% 0%;
+    display: inline-block;
 }
 
 .header{
     overflow: hidden;
-  background-color: #f1f1f1;
+  background-color: #003B70;
+  padding: 10px 10px;
+  margin: 2px 2px;
+  height: 8%;
+
+}
+
+.chartFooter{
+    overflow: hidden;
   padding: 10px 10px;
 
 }
+
+.titleCenter {
+  margin: auto;
+  width: 7%;
+  margin-left: 13%;
+  margin-right: 13%;
+}
+
+.chartTitle div {
+    float: left;
+    clear: none; 
+    padding:50%;
+    
+}
+
+.wrapper{
+    position: relative;
+}
+
 </style>
 <body>
 
     <div class="header">
-        <div class="aChild">
-            <button id="cpuBtn" class="center" onclick="updateCpu()">
-                CPU
-            </button>
-            <button id="memBtn" class="center" onclick="updateMem()">
-                Memory
-            </button>
-            <button id="dbBtn" class="center" onclick="updateDB()">
-                DB
-            </button>
+        <img src="https://online.citi.com/GFC/branding/img/Citi-Enterprise-White.png" alt="citilogo" height="40px">
+        <!-- <img src="https://storage.googleapis.com/kaggle-competitions/kaggle/11117/logos/header.png" alt="citiheader" height="10%"> -->
+        <!-- <p style="text-align: center; color: #D9261C;" >
+            <b> CITI</b>
+        </p> -->
+        <p id="sysclock" style="float: right; color: white;">
+        </p>
+    </div>
+    <div class="chartContainer">
+        <div class="wrapper">
+            <button id="cpuBtn" class="center"  onclick="updateCpu()"><i class="fa fa-refresh"></i></button>
+            <canvas id="cpu" width="200" height="300"></canvas>
+        </div>
+        
+    </div>
+    <div class="chartContainer">
+        <div class="wrapper">
+            <button id="memBtn" class="center" onclick="updateMem()"><i class="fa fa-refresh"></i></button>
+            <canvas id="mem" width="200" height="300"></canvas>
         </div>
     </div>
-    <div class="aParent">
-        <div class="container">
-            <canvas id="cpu"></canvas>
-        </div>
-        <div class="container">
-            <canvas id="mem"></canvas>
-        </div>
-        <div class="container">
-            <canvas id="dbtrend"></canvas>
+    <div class="chartContainer">
+        <div class="wrapper">
+            <button id="dbBtn" class="center" onclick="updateDB()"><i class="fa fa-refresh"></i></button>
+            <canvas id="dbtrend" width="200" height="300"></canvas>
         </div>
     </div>
+
+    <!-- <p style="display:inline-block; width: 5%; margin-left: 16.8%;margin-right: 14%;"> CPU</p>
+    <p style="display:inline-block; width: 5%; margin-left: 14%; margin-right: 14%;"> mem</p>
+    <p style="display:inline-block; width: 5%; margin-right: 16.8%; margin-left: 14%;"> db</p> -->
+
+    <!-- <p style="display:inline-block; width: 33%; text-align: center;"> CPU</p>
+    <p style="display:inline-block; width: 33%; text-align: center;"> mem</p>
+    <p style="display:inline-block; width: 33%; text-align: center;"> db</p> -->
+
+    <!-- <div class="chartFooter">
+        <div class="chartTitle">
+            <p class="titleCenter">CPU</p>
+        </div>
+        <div class="chartTitle">
+            <p class="titleCenter"> MEM</p>
+        </div>
+        <div class="chartTitle">
+            <p class="titleCenter"> DB</p>
+        </div>
+    </div> -->
+    
     <table align="center"><tr><td>
         <p id="topcpu" class="content">
             topcpu 
