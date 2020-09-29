@@ -68,7 +68,7 @@ def db(request):
     #TO DO: Returns a random number that may or may not be db trend :)
     #we have to find command for this
     import random
-    return HttpResponse(random.randint(20,60));
+    return HttpResponse(random.randint(20,60))
 
 def maxcpu(request):
     process = subprocess.Popen('ps -eo pid,ppid,%cpu,cmd --sort=-%cpu | head -n 6 | tail -n 5', 
