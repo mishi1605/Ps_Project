@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^$', views.index), #The orginal index page - localhost:8000/
     # url(r'^ls/', views.runcommand), #For executing first command - localhost:8000/ls
     # url(r'^lsla/', views.runcommand2), #For executing second command - localhost:8000/lsla
+    url(r'^history/', views.history),
     url(r'^admin/', admin.site.urls),
     url(r'^cpu/', views.cpu),
     url(r'^mem/', views.mem),

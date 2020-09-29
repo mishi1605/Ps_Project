@@ -15,6 +15,9 @@ import json
 def index(request):
      return render(request,'index.html')
 
+def history(request):
+    return render(request, 'history.html')
+
 #This method is executing 1st command
 # def runcommand(request):
 #     process = subprocess.Popen('ls', 
