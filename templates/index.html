@@ -15,19 +15,28 @@
       rel="stylesheet">
 </head>
 <style>
-    .content{
-    border-collapse:collapse;
+    .table{
+      table-layout:auto;
+    }
+    .content tr,
+    .content td{
+    border-collapse:separate;
+    border-spacing:0 10px;
     margin: 25px 0;
-    font-size: 1em;
+    font-size: 1.05em;
     border-radius: 5px 5px 0 0;
+    border-left:5px solid #ffffff;
     overflow:hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
    }
-  .content thead tr{
-    background-color: #009879;
+  .content thead {
+    background-color: #003B70;
     color:#ffffff;
-    text-align:left;
+    text-align:center;
+    font-size:1.30em;
     font-weight: bold;
+    margin: 25px 25px;
+    border:10px solid red;
   }
   .content th,
   .content td{
@@ -94,6 +103,7 @@
   padding: 10px 10px;
   margin: 2px 2px;
   height: 8%;
+  position: relative;
 
 }
 
@@ -121,6 +131,7 @@
     position: relative;
 }
 
+
 </style>
 <body>
 
@@ -132,23 +143,27 @@
         </p> -->
         <p id="sysclock" style="float: right; color: white;">
         </p>
+        <button id="hbtn" style="position: absolute; top: 48px; right: 10px;background-color: #4CAF50;border: none;
+        color: white;text-align: center;" onclick="window.open('/history', '_blank')">
+            History
+        </button>
     </div>
     <div class="chartContainer">
         <div class="wrapper">
-            <button id="cpuBtn" class="center"  onclick="updateCpu()"><i class="fa fa-refresh"></i></button>
+            <!-- <button id="cpuBtn" class="center"  onclick="updateCpu()"></button> -->
             <canvas id="cpu" width="200" height="300"></canvas>
         </div>
         
     </div>
     <div class="chartContainer">
         <div class="wrapper">
-            <button id="memBtn" class="center" onclick="updateMem()"><i class="fa fa-refresh"></i></button>
+            <!-- <button id="memBtn" class="center" onclick="updateMem()"></button> -->
             <canvas id="mem" width="200" height="300"></canvas>
         </div>
     </div>
     <div class="chartContainer">
         <div class="wrapper">
-            <button id="dbBtn" class="center" onclick="updateDB()"><i class="fa fa-refresh"></i></button>
+            <!-- <button id="dbBtn" class="center" onclick="updateDB()"></button> -->
             <canvas id="dbtrend" width="200" height="300"></canvas>
         </div>
     </div>
@@ -173,15 +188,16 @@
         </div>
     </div> -->
     
-    <table align="center"><tr><td>
+    <table style="margin: auto;"><tr><td style="padding: 0px 20px 0px 0px;">
         <p id="topcpu" class="content">
-            topcpu 
+            CPU consumption
         </p>
-        </td><td>
+        </td><td style="padding: 0px 0px 0px 2px;">
             <p id="topmem" class="content">
-                topmem 
+                Memory Utilization 
             </p>
         </td></tr></table>
+    </table>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>

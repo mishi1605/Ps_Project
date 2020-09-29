@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Resource Monitor</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function doRunmaxcpu() {
+    console.log("executed ls");
+    axios({
+    method: 'get',
+    // baseURL: window.location.origin,
+    url: 'http://127.0.0.1:8000/maxcpu/',
+
+    // responseType: 'json',
+})
+    .then(function (response) {
+       
+        // document.getElementById("a").innerHTML = response.data;
+       // console.log("in javascript code")
+        console.log(response.data)
+        // console.log(typeof respone.data);
+        var str_a = response.data
+
+        var arr = str_a.split("?")
+        var arr_fin = []
+        
+        for(var i = 1; i < arr.length; i++){
+            // console.log("in for loop \n");
+           // console.log(arr[i]);
+           // console.log(arr[i+1]);
+           // console.log(typeof arr[i])
+            arr_fin.push(JSON.parse(arr[i]));
+
+        }
+        // console.log("printing arr fin")
+        // console.log(arr_fin)
+        // array of json objects
+        CreateTableFromJSON(arr_fin)
+        console.log(response);
+    })
+
+    .catch(function (error) {
+        console.log(' error=', error.message);
+    });
+};
+
+function doRunmaxmem() {
+    console.log("executed ls -la");
+    axios({
+    method: 'get',
+    // baseURL: window.location.origin,
+    url: 'http://127.0.0.1:8000/maxmem/',
+
+    // responseType: 'json',
+})
+    .then(function (response) {
+       
+        // document.getElementById("topmem").innerHTML = response.data;
+        // console.log(response);
+        var str_a = response.data
+
+        var arr = str_a.split("#")
+        var arr_fin = []
+        // // var arr = response.data
+        for(var i = 1; i < arr.length; i++){
+           //  console.log("in for loop \n");
+           // console.log(arr[i]);
+           // console.log(arr[i+1]);
+           // console.log(typeof arr[i])
+            arr_fin.push(JSON.parse(arr[i]));
+
+        }
+        // console.log("printing arr fin")
+        // console.log(arr_fin)
+        // array of json objects
+        CreateTableFromJSON1(arr_fin)
+        console.log(response);
+    })
+
+    .catch(function (error) {
+        console.log(' error=', error.message);
+    });
+};
+
+// doSomething();
+setInterval(doRunmaxcpu, 5000);
+setInterval(doRunmaxmem, 5000);
+
+
+
+function CreateTableFromJSON(myBooks) {
+        console.log(typeof myBooks);
+        // var myBooks = [
+        //     {
+        //         "Book ID": "1",
+        //         "Book Name": "Computer Architecture",
+        //         "Category": "Computers",
+        //         "Price": "125.60"
+        //     },
+        //     {
+        //         "Book ID": "2",
+        //         "Book Name": "Asp.Net 4 Blue Book",
+        //         "Category": "Programming",
+        //         "Price": "56.00"
+        //     },
+        //     {
+        //         "Book ID": "3",
+        //         "Book Name": "Popular Science",
+        //         "Category": "Science",
+        //         "Price": "210.40"
+        //     }
+        // ]
+
+        // EXTRACT VALUE FOR HTML HEADER. 
+        // ('Book ID', 'Book Name', 'Category' and 'Price')
+        var col = [];
+
+        console.log(myBooks.length)
+        for (var i = 0; i < myBooks.length; i++) {
+            console.log(typeof myBooks[i])
+            for (var key in myBooks[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+        var header = table.createTHead();
+        var tblBody = document.createElement("tbody");
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+        var tr = header.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < myBooks.length; i++) {
+
+            tr = tblBody.insertRow(-1);
+
+            for (var j = 0; j < col.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = myBooks[i][col[j]];
+            }
+        }
+        table.appendChild(tblBody);
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("topcpu");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+    }
+
+
+
+
+function CreateTableFromJSON1(myBooks) {
+        console.log(typeof myBooks);
+        // var myBooks = [
+        //     {
+        //         "Book ID": "1",
+        //         "Book Name": "Computer Architecture",
+        //         "Category": "Computers",
+        //         "Price": "125.60"
+        //     },
+        //     {
+        //         "Book ID": "2",
+        //         "Book Name": "Asp.Net 4 Blue Book",
+        //         "Category": "Programming",
+        //         "Price": "56.00"
+        //     },
+        //     {
+        //         "Book ID": "3",
+        //         "Book Name": "Popular Science",
+        //         "Category": "Science",
+        //         "Price": "210.40"
+        //     }
+        // ]
+
+        // EXTRACT VALUE FOR HTML HEADER. 
+        // ('Book ID', 'Book Name', 'Category' and 'Price')
+        var col = [];
+
+        console.log(myBooks.length)
+        for (var i = 0; i < myBooks.length; i++) {
+            console.log(typeof myBooks[i])
+            for (var key in myBooks[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+        var header = table.createTHead();
+        var tblBody = document.createElement("tbody");
+
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+        var tr = header.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < myBooks.length; i++) {
+
+            tr = tblBody.insertRow(-1);
+
+            for (var j = 0; j < col.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = myBooks[i][col[j]];
+            }
+        }
+        table.appendChild(tblBody);
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer1 = document.getElementById("topmem");
+        divContainer1.innerHTML = "";
+        divContainer1.appendChild(table);
+    }
+    setInterval(function(){
+    date = new Date();
+    nlabel = date.getHours()+':'+ (date.getMinutes()<10?'0':'')+date.getMinutes()+':'+(date.getSeconds()<10?'0':'')+date.getSeconds();
+    document.getElementById("sysclock").innerText= 'System Time(IST): '+nlabel;
+}, 1000)
+    </script>
+</head>
+
+<style>
+    .header{
+    overflow: hidden;
+  background-color: #003B70;
+  padding: 10px 10px;
+  margin: 2px 2px;
+  height: 8%;
+  position: relative;
+
+}
+
+.table{
+      table-layout:auto;
+    }
+    .content tr,
+    .content td{
+    border-collapse:separate;
+    border-spacing:0 10px;
+    margin: 25px 0;
+    font-size: 1.05em;
+    border-radius: 5px 5px 0 0;
+    border-left:5px solid #ffffff;
+    overflow:hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+   }
+  .content thead {
+    background-color: #003B70;
+    color:#ffffff;
+    text-align:center;
+    font-size:1.30em;
+    font-weight: bold;
+    margin: 25px 25px;
+    border:10px solid red;
+  }
+  .content th,
+  .content td{
+    padding 12px 15px ;
+  }
+  .content tbody tr{
+    border-bottom:1px solid #dddddd;
+  }
+  .content tbody tr:nth-of-type(even){
+    background-color:#f3f3f3;
+    
+  }
+  .content tbody tr:last-of-type{
+    border-bottom:2px solid #009879;
+  }
+</style>
+<body>
+    <div class="header">
+        <img src="https://online.citi.com/GFC/branding/img/Citi-Enterprise-White.png" alt="citilogo" height="40px">
+        <!-- <img src="https://storage.googleapis.com/kaggle-competitions/kaggle/11117/logos/header.png" alt="citiheader" height="10%"> -->
+        <!-- <p style="text-align: center; color: #D9261C;" >
+            <b> CITI</b>
+        </p> -->
+        <p id="sysclock" style="float: right; color: white;">
+        </p>
+    </div>
+    <table style="margin: auto;"><tr><td style="padding: 0px 20px 0px 0px;">
+        <p id="topcpu" class="content">
+            CPU consumption
+        </p>
+        </td><td style="padding: 0px 0px 0px 2px;">
+            <p id="topmem" class="content">
+                Memory Utilization 
+            </p>
+        </td></tr></table>
+    </table>
+</body>

@@ -93,7 +93,7 @@ var ctx = document.getElementById("cpu").getContext('2d');
 setInterval(function(){
     date = new Date();
     nlabel = date.getHours()+':'+ (date.getMinutes()<10?'0':'')+date.getMinutes()+':'+(date.getSeconds()<10?'0':'')+date.getSeconds();
-    document.getElementById("sysclock").innerText= nlabel;
+    document.getElementById("sysclock").innerText= 'System Time(IST): '+nlabel;
 }, 1000)
 
 var ctx = document.getElementById("mem").getContext('2d');
@@ -263,7 +263,7 @@ var ctx = document.getElementById("dbtrend").getContext('2d');
   updateMem();
  updateDB();
         
-    }, 60000
+    }, 15000
         );
 
 function doRunmaxcpu() {

@@ -15,6 +15,9 @@ import json
 def index(request):
      return render(request,'index.html')
 
+def history(request):
+    return render(request, 'history.html')
+
 #This method is executing 1st command
 # def runcommand(request):
 #     process = subprocess.Popen('ls', 
@@ -77,15 +80,15 @@ def maxcpu(request):
     stderr=subprocess.PIPE )
     arr_cpu = " "
     for a in process.stdout:
-        json_str = {'pid' :'', 'ppid': '','cpuUtilization': '', 'name':''}         
+        json_str = {'process id' :'', 'parent pid': '','cpu_utilization': '', 'name':''}         
         print "intial json_str"
         print json_str
         print type(json_str)
         stri = a.split();
         print stri
-        json_str['pid'] = stri[0]
-        json_str['ppid'] = stri[1]
-        json_str['cpuUtilization'] = stri[2]
+        json_str['process id'] = stri[0]
+        json_str['parent pid'] = stri[1]
+        json_str['cpu_utilization'] = stri[2]
         json_str['name'] = stri[3]
         print "checking json_str"
         print json_str
@@ -131,12 +134,12 @@ def maxmem(request):
     arr_mem = " "
     
     for a in process.stdout:
-        json_str = {'pid' :'', 'ppid': '', 'memory_utilization': '', 'name':''}
+        json_str = {'process id' :'', 'parent pid': '', 'memory_utilization': '', 'name':''}
         # print type(json_str)
         stri = a.split();
         # print str
-        json_str['pid'] = stri[0]
-        json_str['ppid'] = stri[1]
+        json_str['process id'] = stri[0]
+        json_str['parent pid'] = stri[1]
         json_str['name'] = stri[3]
         json_str['memory_utilization'] = stri[2]
         # print json_str
