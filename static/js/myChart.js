@@ -2,14 +2,14 @@ function cpuChart(data, labels, ele) {
     
 }
 
-var cdata_cpu = [10,15,12,1];
-var clabel_cpu = ["12:00", "12:01", "12:02", "12:03"];
+var cdata_cpu = [];
+var clabel_cpu = [];
 
-var cdata_mem = [10,15,12,1];
-var clabel_mem = ["12:00", "12:01", "12:02", "12:03"];
+var cdata_mem = [];
+var clabel_mem = [];
 
-var cdata_db = [10,15,12,1];
-var clabel_db = ["12:00", "12:01", "12:02", "12:03"];
+var cdata_db = [];
+var clabel_db = [];
 
 var ctx = document.getElementById("cpu").getContext('2d');
     var myChart1 = new Chart(ctx, {
